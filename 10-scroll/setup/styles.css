@@ -59,6 +59,7 @@ Variables
 Global Styles
 ===============
 */
+/*scroll behavior is godlike*/
 html {
   scroll-behavior: smooth;
 }

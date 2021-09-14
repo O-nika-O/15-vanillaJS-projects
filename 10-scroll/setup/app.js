@@ -10,19 +10,64 @@ date.innerHTML = new Date().getFullYear();
 const navToggle = document.querySelector(".nav-toggle");
 const linksContainer = document.querySelector(".links-container");
 const links = document.querySelector(".links");
-//dinamically assing links height
+//dinamically assigning links height
 navToggle.addEventListener("click", function () {
   //linksContainer.classList.toggle("show-links");
-  const containerHeight = linksContainer.getBoundingClientRect().height;
   const linksHeight = links.getBoundingClientRect().height;
-  if(containerHeight === 0) {
-      linksContainer.getElementsByClassName.height = `${links.linksHeight}px`
+  const containerHeight = linksContainer.getBoundingClientRect().height;
+  if (containerHeight === 0) {
+    linksContainer.style.height = `${linksHeight}px`;
   } else {
-      linksContainer.getElementsByClassName.height = 0;
+    linksContainer.style.height = 0;
   }
 });
-
+//selection of navbar elements
+const navbar = document.getElementById("nav");
+const topLink = document.querySelector(".top-link");
 // ********** fixed navbar ************
-
+window.addEventListener("scroll", function () {
+  const scrollHeight = window.pageYOffset;
+  const navHeight = navbar.getBoundingClientRect().height;
+  if (scrollHeight > navHeight) {
+    navbar.classList.add("fixed-nav");
+  } else {
+    navbar.classList.remove("fixed-nav");
+  }
+  //link appears after 500px of scrolling
+  if (scrollHeight > 500) {
+    topLink.classList.add("show-link");
+  } else {
+    topLink.classList.remove("show-link");
+  }
+});
 // ********** smooth scroll ************
+
 // select links
+const scrollLinks = document.querySelectorAll(".scroll-link");
+scrollLinks.forEach(function (link) {
+  link.addEventListener("click", function (e) {
+    //prevent default
+    e.preventDefault();
+    //navigate to specific spot
+    const id = e.currentTarget.getAttribute("href").slice(1);
+    const element = document.getElementById(id);
+    //calculate the heights
+    const navHeight = navbar.getBoundingClientRect().height;
+    const containerHeight = linksContainer.getBoundingClientRect().height;
+    const fixedNav = navbar.classList.contains("fixed-nav");
+    let position = element.offsetTop - navHeight;
+    //Navbar position varies before and after fixation
+    if (!fixedNav) {
+      position = position - navHeight;
+    }
+    //Navbar went to high on smaller screens
+    if (navHeight > 82) {
+       position = position + containerHeight;
+    }
+    window.scrollTo({
+      left: 0,
+      top: position,
+    });
+    linksContainer.style.height = 0;
+  });
+});

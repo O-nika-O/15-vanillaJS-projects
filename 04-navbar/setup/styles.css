@@ -199,9 +199,11 @@ nav {
   display: none;
 }
 .links {
-  /* height: 0;
+  /*important to change height to auto
+  when media query is used */
+  height: auto;
   overflow: hidden;
-  transition: var(--transition); */
+  transition: var(--transition); 
 }
 .show-links {
   height: 10rem;

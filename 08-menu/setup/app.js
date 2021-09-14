@@ -1,3 +1,4 @@
+//list of items
 const menu = [
   {
     id: 1,
@@ -71,4 +72,89 @@ const menu = [
     img: "./images/item-9.jpeg",
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
+  {
+    id: 10,
+    title: "STEAK DINNER",
+    category: "dinner",
+    price: 36.99,
+    img: "./images/item-10.jpeg",
+    desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
+  },
 ];
+
+//selected html elements
+const sectionCenter = document.querySelector(".section-center");
+const container = document.querySelector(".btn-container");
+
+//load items and buttons
+window.addEventListener("DOMContentLoaded", function () {
+  displayMenuItems(menu);
+  displayMenuBtns();
+});
+
+//func to display the menu items
+function displayMenuItems(menuItems) {
+  let displayMenu = menuItems.map(function (item) {
+    //console.log(item);
+
+    return `<article class="menu-item">
+    <img src=${item.img} class="photo" alt=${item.title}>
+    <div class="item-info">
+      <header>
+        <h4>${item.title}</h4>
+        <h4 class="price">${item.price}</h4>
+      </header>
+      <p class="item-text">
+        ${item.desc}
+      </p>
+    </div>
+  </article>`;
+  });
+  //renders the html
+  displayMenu = displayMenu.join("");
+  sectionCenter.innerHTML = displayMenu;
+}
+
+//func to display the navigation buttons(filters)
+function displayMenuBtns(){
+    //for unique categories, reduce the values in array
+    const categories = menu.reduce(
+      function (values, item) {
+        if (!values.includes(item.category)) {
+          values.push(item.category);
+        }
+        return values;
+      },
+      ["all"]
+    );
+    const categoryBtns = categories
+      .map(function (category) {
+        return `<button class="filter-btn" type="button" data-id=${category}>${category}
+        </button>`;
+      })
+      .join(""); //You can actually chain join here
+    container.innerHTML = categoryBtns; //renders btns on html
+    
+    //IF U ADD SOMETHIN DYNAMICALLY, U CAN ONLY ACCESS IT
+    //ONCE IT HAS BEEN ADDED TO DE DOM 
+    const filterBtns = container.querySelectorAll(".filter-btn");
+  
+    //func to filter items
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        const category = e.currentTarget.dataset.id;
+        const menuCategory = menu.filter(function (menuItem) {
+          //console.log(menuItem.category);
+          if (menuItem.category === category) {
+            return menuItem;
+          }
+        });
+        //console.log(menuCategory);
+        if (category === "all") {
+          displayMenuItems(menu);
+        } else {
+          displayMenuItems(menuCategory);
+        }
+      });
+    });
+}

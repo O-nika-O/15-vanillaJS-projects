@@ -189,6 +189,8 @@ Slider
   max-width: 80rem;
   position: relative;
   border-radius: 0.5rem;
+  /*if u comment the overflow, images display
+  on the full window width*/
   overflow: hidden;
   margin-top: 4rem;
 }
@@ -200,6 +202,7 @@ Slider
   color: var(--clr-white);
   display: grid;
   place-items: center;
+  /*eye on tansition property*/
   transition: all 0.25s ease-in-out;
   text-align: center;
 }
@@ -264,7 +267,9 @@ Slider
     height: 65vh;
   }
 }
-/* .slide:nth-child(1){
+/* MANUAL SETUP 
+/*a long diplay carroussel of img
+ .slide:nth-child(1){
   left: 0;
 }
 .slide:nth-child(2){
@@ -276,7 +281,8 @@ Slider
 .slide:nth-child(4){
   left: 300%;
 }
+/* it controlls the movement of the carrousel
 .slide{
   transform: translateX(-100%);
-} */
+} 
 /* negative value moves to left */
